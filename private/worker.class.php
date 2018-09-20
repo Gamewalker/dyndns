@@ -86,10 +86,10 @@ class worker extends basicClass {
             }
             
             if ($recordsChanged===true) {
-                status::sendErrorMessage('IP changed', false, 200); 
+                status::sendErrorMessage('IP changed (good)', false, 200);
                 cache::setCache();
             } else {
-                status::sendErrorMessage('IP did not change', true, 200); 
+                status::sendErrorMessage('IP did not change (nochg)', true, 200);
             }
         }
     }
