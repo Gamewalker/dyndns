@@ -27,11 +27,17 @@ class config {
     
     const applicationHash = 'YouShouldChangeThis-kasdj93qosB:DUS';
     
-    //possible values [false,'basic','db']
+    //possible values [false,'basic','db','key']
     const authentication = 'basic';
     
     //Basic Authentication
     const basic_auth_username = 'dynuser';
     
     const basic_auth_password = 'password';
+
+    //Key Authentication
+    const key_auth_config = array(
+        // 'domain' => 'super-secret-key'
+    );
+
 }
