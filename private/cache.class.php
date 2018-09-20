@@ -54,7 +54,7 @@ class cache extends basicClass {
         }
         
         if ($recordChanged===false) {
-           status::sendErrorMessage('IP did not changed', true, 200); 
+           status::sendErrorMessage('IP did not changed (nochg)', true, 200);
         }
         
         return $recordChanged;
