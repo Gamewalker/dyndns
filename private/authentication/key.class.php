@@ -16,6 +16,11 @@ use website\weyand\dyndns;
 class key {
 
     public static function authenticate() {
+
+        if(empty($_GET['ip'])) {
+            $_GET['ip'] = $_SERVER['REMOTE_ADDR'];
+        }
+
         if (isset($_GET['key']) && isset(dyndns\config::key_auth_config[$_GET['hostname']]) && $_GET['key'] == dyndns\config::key_auth_config[$_GET['hostname']]) {
             return true;
         }
