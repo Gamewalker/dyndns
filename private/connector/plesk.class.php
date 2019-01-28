@@ -64,6 +64,8 @@ class plesk {
             $stmt = $this->_db()->prepare('UPDATE dns_recs SET time_stamp=now(), val = ? , displayVal = ? WHERE type = ? AND host = ?');
             $stmt->bind_param("ssss", $ipAdress, $ipAdress, $record, $dns_hostname);
             $stmt->execute();
+
+            $this->incrementDNSZoneId($dns_hostname);
             
         } else {
             if ($current_result===null) {
@@ -72,6 +74,23 @@ class plesk {
         }
         
         return true;
+    }
+
+    public function incrementDNSZoneId($dns_hostname)
+    {
+        $stmt = $this->_db()->prepare(
+            "SELECT dns_zone_id FROM dns_recs WHERE host = ? LIMIT 1"
+        );
+        $stmt->bind_param("s", $dns_hostname);
+        $stmt->execute();
+        $stmt->bind_result($dns_zone_id);
+        $stmt->fetch();
+        $stmt->close();
+
+        // Update IP
+        $stmt = $this->_db()->prepare('UPDATE dns_zone SET serial = serial + 1 WHERE id = ?');
+        $stmt->bind_param("s", $dns_zone_id);
+        $stmt->execute();
     }
     
     /**
