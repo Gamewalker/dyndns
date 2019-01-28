@@ -57,7 +57,16 @@ class filter {
      */
     public static function checkGETParameters($get) {
         //check if variables are set
-        if (!count($get) && !isset($get['hostname']) && !(isset($get['ip']) || isset($get['ip6'])) ) {
+        if(isset($get['mode']) && $get['mode'] === "auto") {
+            $ipByServer = $_SERVER["REMOTE_ADDR"];
+            if(filter_var($ipByServer, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+                $get['ip'] = $ipByServer;
+            } elseif(filter_var($ipByServer, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+                $get['ip6'] = $ipByServer;
+            } else {
+                status::sendErrorMessage('Error: DynDNS Request invalid', true, 400);
+            }
+        } elseif (!count($get) && !isset($get['hostname']) && !(isset($get['ip']) || isset($get['ip6'])) ) {
            status::sendErrorMessage('Error: DynDNS Request invalid', true, 400);
         }
       
