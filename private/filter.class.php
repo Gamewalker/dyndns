@@ -60,9 +60,9 @@ class filter {
         if(isset($get['mode']) && $get['mode'] === "auto") {
             $ipByServer = $_SERVER["REMOTE_ADDR"];
             if(filter_var($ipByServer, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-                $_GET['ip'] = $ipByServer;
+                $get['ip'] = $ipByServer;
             } elseif(filter_var($ipByServer, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-                $_GET['ip6'] = $ipByServer;
+                $get['ip6'] = $ipByServer;
             } else {
                 status::sendErrorMessage('Error: DynDNS Request invalid', true, 400);
             }
